@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { useExpressServer } from 'routing-controllers';
-import { useContainer as rcUseContainer } from 'routing-controllers';
+import { useExpressServer, useContainer as rcUseContainer } from 'routing-controllers';
+
 import { createConnection, useContainer as typeOrmUseContainer } from 'typeorm';
 import { Container } from 'typedi';
 import { Config } from './config/config.enum';
@@ -21,7 +21,7 @@ const app = express();
 app.enable('trust proxy');
 app.use(cors());
 app.use(helmet());
-app.use(express.urlencoded({extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 createConnection(ormconfig).then(async connection => {
@@ -30,9 +30,8 @@ createConnection(ormconfig).then(async connection => {
       UserController,
       PhotoController
     ]
-  });  
+  });
   app.listen(config.get(Config.PORT), () => console.log(`Running on port ${config.get(Config.PORT)}`));
 }).catch(e => {
-  console.log("Error: ", e);
+  console.log('Error: ', e);
 });
-
